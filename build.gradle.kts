@@ -21,13 +21,12 @@ tasks {
     wrapper {
         gradleVersion = "7.3"
     }
+
 }
 
+// ./gradlew -q day -P day=04
 val day: String by project
 tasks.register("day") {
-    doFirst {
-        println("src/Day${day}.kt")
-    }
     doLast {
         val template = File("src/utils/template.kt").readText().replace("XX", day)
         File("src/Day${day}.kt").writeText(template)
