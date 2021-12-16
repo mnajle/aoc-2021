@@ -2,6 +2,20 @@ package utils
 
 
 class Matrix<T>(input: List<List<T>>) {
+    companion object {
+        fun <T> createEmpty(columns: Int, rows: Int, defaultValue: T): Matrix<T> {
+            val content = mutableListOf<List<T>>()
+            for (y in 0..rows) {
+                val row = mutableListOf<T>()
+                for (x in 0..columns) {
+                    row.add(defaultValue)
+                }
+                content.add(row)
+            }
+            return Matrix(content)
+        }
+    }
+
     class MatrixIndex(val x: Int, val y: Int) {
         override fun toString(): String {
             return "x: ${this.x}, y: ${this.y}"
@@ -44,6 +58,10 @@ class Matrix<T>(input: List<List<T>>) {
 
     override fun toString(): String {
         return matrix.joinToString("\n") { line -> line.joinToString("\t") }
+    }
+
+    fun toString(stringfy: (T) -> String): String {
+        return matrix.joinToString("\n") { line -> line.joinToString("\t") { x -> stringfy(x) } }
     }
 
     operator fun get(i: Int, j: Int): T {
