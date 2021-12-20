@@ -20,12 +20,14 @@ class Matrix<T>(input: List<List<T>>) {
         override fun toString(): String {
             return "x: ${this.x}, y: ${this.y}"
         }
+
         override fun equals(other: Any?): Boolean {
             if (other !is MatrixIndex) {
                 return false
             }
             return this.x == other.x && this.y == other.y
         }
+
         override fun hashCode(): Int {
             return 31 * x + y
         }
@@ -101,10 +103,10 @@ class Matrix<T>(input: List<List<T>>) {
         return this.getAdjacent(index.x, index.y)
     }
 
-    fun getAdjacentWithIndex(index: MatrixIndex): List<MatrixItem<T>> {
+    fun getAdjacentWithIndex(index: MatrixIndex, diagonal: Boolean = true): List<MatrixItem<T>> {
         val x = index.x
         val y = index.y
-        val indexes = listOf(
+        var indexes = listOf(
             MatrixIndex(x - 1, y - 1),
             MatrixIndex(x - 1, y),
             MatrixIndex(x - 1, y + 1),
@@ -114,6 +116,14 @@ class Matrix<T>(input: List<List<T>>) {
             MatrixIndex(x + 1, y),
             MatrixIndex(x + 1, y + 1),
         )
+        if (!diagonal) {
+            indexes = listOf(
+                MatrixIndex(x - 1, y),
+                MatrixIndex(x, y - 1),
+                MatrixIndex(x, y + 1),
+                MatrixIndex(x + 1, y),
+            )
+        }
         return indexes.filter { a -> this.checkIndex(a.x, a.y) }.map { i ->
             MatrixItem(this[i], i)
         }
@@ -137,6 +147,10 @@ class Matrix<T>(input: List<List<T>>) {
             }
         }
         return result
+    }
+
+    fun lastIndex(): MatrixIndex {
+        return MatrixIndex(this.columns - 1, this.rows - 1)
     }
 
 }
