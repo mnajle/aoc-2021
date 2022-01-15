@@ -9,8 +9,8 @@ fun main() {
     }
 
     val testInput = readInput("XX_test") { x -> x }
-    check(part1(testInput) == 0)
-    check(part2(testInput) == 1)
+    test(1, part1(testInput), 0)
+    test(2, part2(testInput), 1)
 
     val input = readInput("XX") { x -> x }
     println(part1(input))

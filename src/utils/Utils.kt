@@ -13,3 +13,7 @@ fun <T> readInput(name: String, function: (line: String) -> T) = readInput(name)
  * Converts string to md5 hash.
  */
 fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16)
+
+fun <T> test(item: Any, actual: T, expected: T) {
+    check(actual == expected) { "Check $item Failed. Expected $expected got $actual" }
+}
